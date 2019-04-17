@@ -1,0 +1,48 @@
+apiVersion: apps/v1beta1 
+kind: Deployment
+metadata:
+  name: app
+spec:
+  selector:
+    matchLabels:
+      app: app
+  replicas: 1 
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+      - name: app
+        image: 067079363628.dkr.ecr.ap-south-1.amazonaws.com/devops:app
+        ports:
+        - containerPort: 8000
+        #env:
+         #- name: POSTGRES_HOST
+          # value: db
+         #- name: POSTGRES_PORT
+          # value: "5432"
+         #- name: POSTGRES_DB
+          # value: learndjango
+         #- name: POSTGRES_USER
+          # value: postgres
+        # - name: POSTGRES_PASSWORD
+          # value: password   
+ 
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: app
+  labels:
+    app: app 
+spec:
+  selector:
+    app: app   
+  type: NodePort
+  ports:
+   - name: app
+     port: 8080
+     targetPort: 8000
+

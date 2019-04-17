@@ -1,0 +1,40 @@
+apiVersion: apps/v1beta1  # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: db
+spec:
+  selector:
+    matchLabels:
+      app: db
+  replicas: 1 
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+      - name: db
+        image: postgres:latest
+        ports:
+        - containerPort: 5432
+        env:        
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_DB
+          value: learndjango
+        - name: POSTGRES_PASSWORD
+          value: password
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: db
+  labels:
+    app: db
+spec:
+  selector:
+    app: db
+  ports:
+   - port: 5432
+
