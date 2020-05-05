@@ -17,6 +17,7 @@ spec:
         image: 067079363628.dkr.ecr.ap-south-1.amazonaws.com/devops:app
         ports:
         - containerPort: 8000
+      #imagePullPolicy: Always
         #env:
          #- name: POSTGRES_HOST
           # value: db
